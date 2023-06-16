@@ -1,6 +1,8 @@
-﻿namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Banion
+﻿using OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
+
+namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Banion
 {
-    public interface IBanion
+    public interface IBanion : IGameObject, IElemental
     {
         public const uint NUM_MOVES = 4;
         public const uint MIN_HP = 0;

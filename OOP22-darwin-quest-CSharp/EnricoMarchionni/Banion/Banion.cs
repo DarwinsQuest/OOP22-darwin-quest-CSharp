@@ -4,22 +4,20 @@ namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Banion
 {
     public class Banion : IBanion
     {
-        //private readonly UUID id;
-        private readonly IElement _element;
-        private readonly string _name;
+        private readonly Guid id;
         //private readonly ISet<IMove> _moves;
         public event EventHandler<IBanion>? BanionChanged;
 
         public Banion(IElement element, string name, uint hp/*, ISet<IMove> moves*/)
         {
-            //id = UUID.randomUUID();
-            _element = element ?? throw new ArgumentNullException(nameof(element));
+            id = Guid.NewGuid();
+            Element = element ?? throw new ArgumentNullException(nameof(element));
             //_moves = new HashSet<>(); => WAITING FOR Raffaele to push IMove
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException($"{nameof(name)} can't be null or white spaces only");
             }
-            _name = name;
+            Name = name;
             if (hp <= IBanion.MIN_HP)
             {
                 throw new ArgumentException($"{nameof(hp)} must be greater that {IBanion.MIN_HP}");
@@ -28,15 +26,19 @@ namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Banion
             MaxHp = Hp;
         }
 
+        public string Name { get; }
+
+        public IElement Element { get; }
+
         public bool IsAlive => Hp > IBanion.MIN_HP;
 
         //public ISet<IMove> Moves => throw new NotImplementedException();
 
+        public uint Level { get; private set; } = 1;
+
         public uint Hp { get; private set; }
 
         public uint MaxHp { get; private set; }
-
-        public uint Level { get; private set; } = 1;
 
         public void IncreaseHp(uint amount)
         {
@@ -60,5 +62,15 @@ namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Banion
         //{
         //    throw new NotImplementedException();
         //}
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Banion banion && id.Equals(banion.id);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(id, Name, Element, IsAlive, Hp, MaxHp, Level);
+        }
     }
 }
