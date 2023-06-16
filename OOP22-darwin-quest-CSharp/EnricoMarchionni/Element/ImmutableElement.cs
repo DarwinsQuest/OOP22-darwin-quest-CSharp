@@ -2,15 +2,15 @@
 {
     public class ImmutableElement : IElement
     {
-        private readonly ISet<string> _weaker;
-        private readonly ISet<string> _stronger;
+        private readonly IReadOnlySet<string> _weaker;
+        private readonly IReadOnlySet<string> _stronger;
 
         protected ImmutableElement(string name) : this(name, new HashSet<string>(), new HashSet<string>())
         {
 
         }
 
-        public ImmutableElement(string name, ISet<string> weaker, ISet<string> stronger)
+        public ImmutableElement(string name, IReadOnlySet<string> weaker, IReadOnlySet<string> stronger)
         {
             Name = name;
             _weaker = weaker;
