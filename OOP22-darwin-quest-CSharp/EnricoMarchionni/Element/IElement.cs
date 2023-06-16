@@ -1,6 +1,4 @@
-﻿using OOP22_darwin_quest_CSharp.EnricoMarchionni;
-
-namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Element
+﻿namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Element
 {
     public interface IElement : IGameObject
     {
