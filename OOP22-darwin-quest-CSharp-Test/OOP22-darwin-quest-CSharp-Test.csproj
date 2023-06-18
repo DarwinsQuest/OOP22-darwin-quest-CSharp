@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>OOP22_darwin_quest_CSharp_Test</RootNamespace>
+    <NamespaceDelimiter>;</NamespaceDelimiter>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 

@@ -1,19 +1,18 @@
-﻿namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.World
+﻿namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.World;
+
+public interface IBoard
 {
-    public interface IBoard
-    {
-        uint FirstPos { get; }
+    uint FirstPos { get; }
 
-        uint LastPos { get; }
+    uint LastPos { get; }
 
-        uint Levels { get; }
+    uint Levels { get; }
 
-        uint Pos { get; }
+    uint Pos { get; }
 
-        bool CanMove { get; }
+    bool CanMove { get; }
 
-        uint MaxStep { get; }
+    uint MaxStep { get; }
 
-        uint? Move();
-    }
+    uint? Move();
 }

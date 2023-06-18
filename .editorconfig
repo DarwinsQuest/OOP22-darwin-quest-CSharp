@@ -3,3 +3,6 @@ root = true
 
 [*]
 end_of_line = lf
+
+csharp_style_namespace_declarations = file_scoped
+dotnet_diagnostic.IDE0161.severity = error

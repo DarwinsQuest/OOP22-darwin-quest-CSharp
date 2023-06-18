@@ -1,8 +1,7 @@
-﻿namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Element
-{
-    public interface IElemental
-    {
+﻿namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
 
-        IElement Element { get; }
-    }
+public interface IElemental
+{
+
+    IElement Element { get; }
 }

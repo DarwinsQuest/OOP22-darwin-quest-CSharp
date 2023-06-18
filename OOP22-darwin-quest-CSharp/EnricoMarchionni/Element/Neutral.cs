@@ -1,9 +1,8 @@
-﻿namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Element
+﻿namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
+
+public class Neutral : ImmutableElement
 {
-    public class Neutral : ImmutableElement
+    public Neutral() : base("Neutral")
     {
-        public Neutral() : base("Neutral")
-        {
-        }
     }
 }

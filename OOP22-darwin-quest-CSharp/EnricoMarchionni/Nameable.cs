@@ -1,8 +1,7 @@
-﻿namespace OOP22_darwin_quest_CSharp.EnricoMarchionni
-{
-    public interface INameable
-    {
+﻿namespace OOP22_darwin_quest_CSharp.EnricoMarchionni;
 
-        string Name { get; }
-    }
+public interface INameable
+{
+
+    string Name { get; }
 }
