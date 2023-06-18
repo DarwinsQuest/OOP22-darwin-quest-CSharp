@@ -10,7 +10,7 @@ public class TestBoard
     public void Movement()
     {
         uint levels = 10;
-        var board = new Board(levels, new TestSupplier());
+        var board = new Board(levels, new BasicSupplier());
         uint pos = 0;
 
         while (board.Move().HasValue)

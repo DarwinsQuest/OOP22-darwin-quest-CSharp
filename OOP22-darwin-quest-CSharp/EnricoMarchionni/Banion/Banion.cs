@@ -1,4 +1,5 @@
-﻿using OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
+using System;
+using OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
 
 namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Banion;
 
@@ -42,26 +43,43 @@ public class Banion : IBanion
 
     public void IncreaseHp(uint amount)
     {
-        Hp = Math.Min(Hp + amount, MaxHp);
+        var newHp = Hp + amount;
+        if (newHp <= Hp)
+        {
+            throw new ArgumentException("Amount to increase Hp cannot be negative or zero", nameof(amount));
+        }
+        Hp = Math.Min(newHp, MaxHp);
         BanionChanged?.Invoke(this, this);
     }
 
     public void DecreaseHp(uint amount)
     {
-        Hp = Math.Max(Hp - amount, IBanion.MIN_HP);
+        var newHp = Hp - amount;
+        if (newHp >= Hp)
+        {
+            throw new ArgumentException("Amount to decrease Hp cannot be negative or zero", nameof(amount));
+        }
+        Hp = Math.Max(newHp, IBanion.MIN_HP);
         BanionChanged?.Invoke(this, this);
     }
 
     public void SetHpToMax()
     {
-        Hp = MaxHp;
-        BanionChanged?.Invoke(this, this);
+        if (Hp != MaxHp)
+        {
+            Hp = MaxHp;
+            BanionChanged?.Invoke(this, this);
+        }
     }
 
     //public bool ReplaceMove(IMove oldOne, IMove newOne)
     //{
     //    throw new NotImplementedException();
     //}
+
+    public static bool operator ==(Banion? left, Banion? right) => left is Banion banion && banion.Equals(right);
+
+    public static bool operator !=(Banion? left, Banion? right) => !(left == right);
 
     public override bool Equals(object? obj)
     {
