@@ -1,4 +1,4 @@
-﻿using OOP22_darwin_quest_CSharp.EnricoMarchionni.Difficulty;
+using OOP22_darwin_quest_CSharp.EnricoMarchionni.Difficulty;
 
 namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.World;
 
