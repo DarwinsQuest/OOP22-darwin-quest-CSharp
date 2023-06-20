@@ -7,13 +7,13 @@ public abstract class AbstractGameEntity : IGameEntity
 {
     private static readonly List<IBanion> Inventory = new();
 
-    protected AbstractGameEntity(string name)
+    protected AbstractGameEntity(string nickname)
     {
-        if (string.IsNullOrWhiteSpace(name))
+        if (string.IsNullOrWhiteSpace(nickname))
         {
             throw new ArgumentException("Entity nickname cannot be null or blank.");
         }
-        Name = name;
+        Name = nickname;
     }
 
     public event EventHandler<IBanion>? SwapEvent;
