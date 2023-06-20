@@ -1,19 +1,42 @@
 using System;
+using System.Collections.Immutable;
+using System.Xml.Linq;
 using OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
+using OOP22_darwin_quest_CSharp.RaffaeleMarrazzo.Move;
 
 namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Banion;
 
 public class Banion : IBanion
 {
-    private readonly Guid id;
-    //private readonly ISet<IMove> _moves;
-    public event EventHandler<IBanion>? BanionChanged;
+    private const uint NUM_MOVES = 4;
 
-    public Banion(IElement element, string name, uint hp/*, ISet<IMove> moves*/)
+    private readonly Guid id;
+    private readonly ISet<IMove> _moves;
+    public event EventHandler<IBanion>? EventBanionChanged;
+
+    private Banion(Banion banion)
+    {
+        id = Guid.NewGuid();
+        Element = banion.Element;
+        _moves = new HashSet<IMove>(banion._moves);
+        Name = banion.Name;
+        Hp = banion.Hp;
+        MaxHp = Hp;
+    }
+
+    public Banion(IElement element, string name, uint hp, ISet<IMove> moves)
     {
         id = Guid.NewGuid();
         Element = element ?? throw new ArgumentNullException(nameof(element));
-        //_moves = new HashSet<>(); => WAITING FOR Raffaele to push IMove
+        if (moves.Count != NUM_MOVES)
+        {
+            throw new ArgumentException($"The {nameof(moves)} have to be exactly {NUM_MOVES}");
+        }
+        if (moves.Any(m => !IsMoveAcceptable(m)))
+        {
+            throw new ArgumentException($"The {nameof(moves)} have to be all acceptable");
+        }
+        _moves = new HashSet<IMove>(moves);
         if (string.IsNullOrWhiteSpace(name))
         {
             throw new ArgumentException($"{nameof(name)} can't be null or white spaces only");
@@ -27,13 +50,18 @@ public class Banion : IBanion
         MaxHp = Hp;
     }
 
+    private bool IsMoveAcceptable(IMove move)
+    {
+        return move.Element.Equals(Element) || move.Element.GetType().Equals(typeof(Neutral));
+    }
+
     public string Name { get; }
 
     public IElement Element { get; }
 
     public bool IsAlive => Hp > IBanion.MIN_HP;
 
-    //public ISet<IMove> Moves => throw new NotImplementedException();
+    public IReadOnlySet<IMove> Moves => ImmutableHashSet.CreateRange(_moves);
 
     public uint Level { get; private set; } = 1;
 
@@ -49,7 +77,7 @@ public class Banion : IBanion
             throw new ArgumentException("Amount to increase Hp cannot be negative or zero", nameof(amount));
         }
         Hp = Math.Min(newHp, MaxHp);
-        BanionChanged?.Invoke(this, this);
+        EventBanionChanged?.Invoke(this, this);
     }
 
     public void DecreaseHp(uint amount)
@@ -60,7 +88,7 @@ public class Banion : IBanion
             throw new ArgumentException("Amount to decrease Hp cannot be negative or zero", nameof(amount));
         }
         Hp = Math.Max(newHp, IBanion.MIN_HP);
-        BanionChanged?.Invoke(this, this);
+        EventBanionChanged?.Invoke(this, this);
     }
 
     public void SetHpToMax()
@@ -68,18 +96,33 @@ public class Banion : IBanion
         if (Hp != MaxHp)
         {
             Hp = MaxHp;
-            BanionChanged?.Invoke(this, this);
+            EventBanionChanged?.Invoke(this, this);
         }
     }
 
-    //public bool ReplaceMove(IMove oldOne, IMove newOne)
-    //{
-    //    throw new NotImplementedException();
-    //}
+    public bool ReplaceMove(IMove oldOne, IMove newOne)
+    {
+        var result = IsMoveAcceptable(newOne) && _moves.Remove(oldOne) && _moves.Add(newOne);
+        if (result)
+        {
+            EventBanionChanged?.Invoke(this, this);
+        }
+        return result;
+    }
+
+    public IBanion Copy()
+    {
+        return new Banion(this);
+    }
 
     public static bool operator ==(Banion? left, Banion? right) => left is Banion banion && banion.Equals(right);
 
     public static bool operator !=(Banion? left, Banion? right) => !(left == right);
+
+    public bool Equals(IBanion? other)
+    {
+        return other is Banion banion && id.Equals(banion.id);
+    }
 
     public override bool Equals(object? obj)
     {
