@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using OOP22_darwin_quest_CSharp.EnricoMarchionni;
 using OOP22_darwin_quest_CSharp.EnricoMarchionni.Banion;
+using OOP22_darwin_quest_CSharp.RaffaeleMarrazzo.Battle.Decision;
+using OOP22_darwin_quest_CSharp.RaffaeleMarrazzo.Move;
 
 namespace OOP22_darwin_quest_CSharp.Cipollone.Entity;
 
@@ -18,11 +20,11 @@ public interface IGameEntity : IGameObject
 
     IBanion DeployBanion();
 
-    // Move SelectMove(IBanion banion);
+    IMove SelectMove(IBanion banion);
 
     IBanion? SwapBanion();
 
-    // Decision GetDecision();
+    IDecision GetDecision();
 
     bool IsOutOfBanions();
     

@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using OOP22_darwin_quest_CSharp.EnricoMarchionni.Banion;
+using OOP22_darwin_quest_CSharp.RaffaeleMarrazzo.Battle.Decision;
+using OOP22_darwin_quest_CSharp.RaffaeleMarrazzo.Move;
 
 namespace OOP22_darwin_quest_CSharp.Cipollone.Entity;
 
@@ -64,6 +66,8 @@ public abstract class AbstractGameEntity : IGameEntity
 
     protected abstract IBanion DecideDeployedBanion();
 
+    public abstract IMove SelectMove(IBanion banion);
+
     public IBanion? SwapBanion()
     {
         var banion = DecideSwappedBanion();
@@ -75,6 +79,8 @@ public abstract class AbstractGameEntity : IGameEntity
     }
 
     protected abstract IBanion? DecideSwappedBanion();
+
+    public abstract IDecision GetDecision();
 
     public bool IsOutOfBanions()
     {

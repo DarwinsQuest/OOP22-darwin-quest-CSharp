@@ -1,5 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using OOP22_darwin_quest_CSharp.EnricoMarchionni.Banion;
+using OOP22_darwin_quest_CSharp.RaffaeleMarrazzo.Battle.Decision;
+using OOP22_darwin_quest_CSharp.RaffaeleMarrazzo.Move;
 
 namespace OOP22_darwin_quest_CSharp.Cipollone.Entity;
 
@@ -20,7 +22,17 @@ public class Player : AbstractGameEntity, IPlayer
         throw new NotImplementedException(NoInputMsg);
     }
 
+    public override IMove SelectMove(IBanion banion)
+    {
+        throw new NotImplementedException(NoInputMsg);
+    }
+
     protected override IBanion? DecideSwappedBanion()
+    {
+        throw new NotImplementedException(NoInputMsg);
+    }
+
+    public override IDecision GetDecision()
     {
         throw new NotImplementedException(NoInputMsg);
     }
