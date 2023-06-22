@@ -21,7 +21,7 @@ public class Banion : IBanion
         _moves = new HashSet<IMove>(banion._moves);
         Name = banion.Name;
         Hp = banion.Hp;
-        MaxHp = Hp;
+        MaxHp = banion.MaxHp;
     }
 
     public Banion(IElement element, string name, uint hp, ISet<IMove> moves)
