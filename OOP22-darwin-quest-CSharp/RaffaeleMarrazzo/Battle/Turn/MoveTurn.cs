@@ -57,9 +57,8 @@ public class MoveTurn : AbstractTurn, IMoveTurn
 
     protected override void DoAction()
     {
-        // AI logic not implemented yet.
-        // _actionDone = GetEntityOnTurn().SelectMove(_activeBanion);
-        // _actionDone.Perform(_activeBanion, _passiveBanion);
+        _actionDone = GetEntityOnTurn().SelectMove(_activeBanion);
+        _actionDone.Perform(_activeBanion, _passiveBanion);
         _passiveBanionCopy = _passiveBanion.Copy();
     }
 }
