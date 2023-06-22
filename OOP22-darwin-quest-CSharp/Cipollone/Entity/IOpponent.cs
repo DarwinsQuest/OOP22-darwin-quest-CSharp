@@ -2,5 +2,5 @@
 
 public interface IOpponent : IGameEntity
 {
-    // void SetDifficulty(IAI difficulty);
+    
 }

@@ -8,31 +8,31 @@ namespace OOP22_darwin_quest_CSharp.Cipollone.Entity;
 
 public class Opponent : AbstractGameEntity, IOpponent
 {
-    private readonly IAI _ai;
-    
+    public IAI Ai { private get; set; }
+
     public Opponent(string nickname, IAI difficulty) : base(nickname)
     {
-        _ai = difficulty;
+        Ai = difficulty;
     }
 
     protected override IBanion DecideDeployedBanion()
     {
-        return _ai.DecideBanionDeployment(GetInventory());
+        return Ai.DecideBanionDeployment(GetInventory());
     }
 
     public override IMove SelectMove(IBanion banion)
     {
-        return _ai.DecideMoveSelection(banion.Moves.ToImmutableList());
+        return Ai.DecideMoveSelection(banion.Moves.ToImmutableList());
     }
 
     protected override IBanion? DecideSwappedBanion()
     {
-        return _ai.DecideBanionSwap(GetInventory());
+        return Ai.DecideBanionSwap(GetInventory());
     }
 
     public override IDecision GetDecision()
     {
-        return _ai.GetDecision();
+        return Ai.GetDecision();
     }
 
     public override bool Equals(object? obj)
@@ -40,19 +40,19 @@ public class Opponent : AbstractGameEntity, IOpponent
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
         var other = (Opponent) obj;
-        return obj.GetType() == GetType() && base.Equals(other) && _ai.Equals(other._ai);
+        return obj.GetType() == GetType() && base.Equals(other) && Ai.Equals(other.Ai);
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(base.GetHashCode(), _ai);
+        return HashCode.Combine(base.GetHashCode(), Ai);
     }
 
     public override string ToString()
     {
         return base.ToString() + ": nickname='" + Name + '\''
             + ", inventory=" + GetInventory()
-            + ", ai=" + _ai;
+            + ", ai=" + Ai;
     }
     
 }
