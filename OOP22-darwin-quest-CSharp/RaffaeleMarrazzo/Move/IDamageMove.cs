@@ -7,6 +7,6 @@ public interface IDamageMove : IMove
 
     uint DamageMultiplier { get; }
 
-    uint ComputeDamage(Banion playerBanion, Banion opponentBanion);
+    uint ComputeDamage(IBanion playerBanion, IBanion opponentBanion);
 
 }
