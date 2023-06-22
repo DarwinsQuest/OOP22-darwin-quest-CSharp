@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Immutable;
 using OOP22_darwin_quest_CSharp.EnricoMarchionni.Banion;
 using OOP22_darwin_quest_CSharp.RaffaeleMarrazzo.Battle.Decision;
 using OOP22_darwin_quest_CSharp.RaffaeleMarrazzo.Move;
@@ -7,7 +7,7 @@ namespace OOP22_darwin_quest_CSharp.Cipollone.Entity;
 
 public abstract class AbstractGameEntity : IGameEntity
 {
-    private static readonly List<IBanion> Inventory = new();
+    private readonly List<IBanion> _inventory = new();
 
     protected AbstractGameEntity(string nickname)
     {
@@ -22,38 +22,38 @@ public abstract class AbstractGameEntity : IGameEntity
     
     public string Name { get; }
     
-    public List<IBanion> GetInventory()
+    public IList<IBanion> GetInventory()
     {
-        return new List<IBanion>(Inventory);
+        return _inventory.ToImmutableList();
     }
 
     public bool AddToInventory(IBanion banion)
     {
-        if (Inventory.Contains(banion))
+        if (_inventory.Contains(banion))
         {
             return false;
         }
-        var previousSize = Inventory.Count;
-        Inventory.Add(banion);
-        return previousSize == Inventory.Count - 1;
+        var previousSize = _inventory.Count;
+        _inventory.Add(banion);
+        return previousSize == _inventory.Count - 1;
     }
 
-    public bool AddToInventory(Collection<IBanion> banions)
+    public bool AddToInventory(IEnumerable<IBanion> banions)
     {
-        var allowedBanions = banions.Where(b => !Inventory.Contains(b)).ToList();
-        var previousSize = Inventory.Count;
-        Inventory.AddRange(banions);
-        return previousSize == Inventory.Count - allowedBanions.Count;
+        var allowedBanions = banions.Where(b => !_inventory.Contains(b)).ToList();
+        var previousSize = _inventory.Count;
+        _inventory.AddRange(allowedBanions);
+        return previousSize == _inventory.Count - allowedBanions.Count;
     }
 
     public IBanion? UpdateInventory(IBanion oldBanion, IBanion newBanion)
     {
-        if (!Inventory.Contains(oldBanion) || Inventory.Contains(newBanion))
+        if (!_inventory.Contains(oldBanion) || _inventory.Contains(newBanion))
         {
             return null;
         }
-        var index = Inventory.IndexOf(oldBanion);
-        Inventory.Insert(index, newBanion);
+        var index = _inventory.IndexOf(oldBanion);
+        _inventory.Insert(index, newBanion);
         return oldBanion;
     }
 
@@ -84,7 +84,7 @@ public abstract class AbstractGameEntity : IGameEntity
 
     public bool IsOutOfBanions()
     {
-        return Inventory.All(banion => !banion.IsAlive);
+        return _inventory.All(banion => !banion.IsAlive);
     }
 
     public override bool Equals(object? obj)
