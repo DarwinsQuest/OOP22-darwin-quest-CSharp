@@ -53,7 +53,7 @@ public abstract class AbstractGameEntity : IGameEntity
             return null;
         }
         var index = _inventory.IndexOf(oldBanion);
-        _inventory.Insert(index, newBanion);
+        _inventory[index] = newBanion;
         return oldBanion;
     }
 
