@@ -16,7 +16,7 @@ public abstract class MiscDecision : IDecision
         _name = name;
     }
 
-    public override int GetHashCode() => HashCode.Combine(_name);
+    public override int GetHashCode() => _name.GetHashCode();
 
     public override bool Equals(object? obj)
     {
