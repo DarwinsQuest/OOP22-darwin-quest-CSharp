@@ -38,4 +38,9 @@ public class ImmutableElement : IElement
     {
         return HashCode.Combine(Name, _weaker, _stronger);
     }
+
+    public override string? ToString()
+    {
+        return Name;
+    }
 }
