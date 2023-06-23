@@ -17,7 +17,7 @@ public class MoveTurn : AbstractTurn, IMoveTurn
         {
             if (HasBeenDone)
             {
-                return new Tuple<IMove, IBanion, IBanion>(_actionDone, _activeBanionCopy, _passiveBanionCopy);
+                return new Tuple<IMove, IBanion, IBanion>(_actionDone!, _activeBanionCopy, _passiveBanionCopy!);
             }
             else
             {
@@ -35,8 +35,8 @@ public class MoveTurn : AbstractTurn, IMoveTurn
         else
         {
             _actionDone = null;
-            _activeBanion = previousTurn.OtherEntityCurrentlyDeployedBanion();
-            _passiveBanion = previousTurn.OnTurnCurrentlyDeployedBanion();
+            _activeBanion = previousTurn.OtherEntityCurrentlyDeployedBanion()!;
+            _passiveBanion = previousTurn.OnTurnCurrentlyDeployedBanion()!;
             _activeBanionCopy = _activeBanion.Copy();
             _passiveBanionCopy = null;
         }

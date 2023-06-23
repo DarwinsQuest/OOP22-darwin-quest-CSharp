@@ -52,7 +52,7 @@ public class BasicAI : IAI
         {
             entrySet.Add(new KeyValuePair<K, V>(key, dict[key]));
         }
-        return entrySet.Where(entry => entry.Value.Equals(value)).First().Key;
+        return entrySet.Where(entry => entry.Value!.Equals(value)).First().Key;
     }
 
     private static int GetNearestNumber(int num, ICollection<int> numbers)
@@ -68,8 +68,7 @@ public class BasicAI : IAI
                 diff = number - num;
             }
         }
-        int retVal = nearestNumber.Value;
-        return retVal;
+        return nearestNumber ?? throw new NullReferenceException();
     }
 
     private T GetRandomElement<T>(ICollection<T> coll) => coll.ToList()[_generator.Next(coll.Count)];

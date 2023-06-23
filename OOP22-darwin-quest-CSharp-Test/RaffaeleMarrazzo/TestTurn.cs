@@ -124,7 +124,7 @@ public class TestTurn
         var turn = new DeployTurn(E1, E2);
         turn.PerformAction();
         IBanion deployedBanion = turn.Action;
-        AssertBanionEquality(turn.OnTurnCurrentlyDeployedBanion(), deployedBanion);
+        AssertBanionEquality(turn.OnTurnCurrentlyDeployedBanion()!, deployedBanion);
     }
 
     [Test]
@@ -132,14 +132,14 @@ public class TestTurn
     {
         var previousTurn = DoDeployTurns();
         var turn = new MoveTurn(previousTurn);
-        var passiveBanionBeforeAction = previousTurn.OnTurnCurrentlyDeployedBanion().Copy();
+        var passiveBanionBeforeAction = previousTurn.OnTurnCurrentlyDeployedBanion()?.Copy();
         var activeBanion = previousTurn.OtherEntityCurrentlyDeployedBanion();
         turn.PerformAction();
         var actionDone = turn.Action;
         var chosenMove = (IDamageMove)actionDone.Item1;
-        AssertBanionEquality(turn.OnTurnCurrentlyDeployedBanion(), actionDone.Item2);
-        AssertBanionEquality(turn.OtherEntityCurrentlyDeployedBanion(), actionDone.Item3);
-        Assert.That(chosenMove.ComputeDamage(actionDone.Item2, actionDone.Item3), Is.EqualTo(passiveBanionBeforeAction.Hp - actionDone.Item3.Hp));
+        AssertBanionEquality(turn.OnTurnCurrentlyDeployedBanion()!, actionDone.Item2);
+        AssertBanionEquality(turn.OtherEntityCurrentlyDeployedBanion()!, actionDone.Item3);
+        Assert.That(chosenMove.ComputeDamage(actionDone.Item2, actionDone.Item3), Is.EqualTo(passiveBanionBeforeAction?.Hp - actionDone.Item3.Hp));
     }
 
     [Test]
@@ -147,13 +147,13 @@ public class TestTurn
     {
         var previousTurn = DoDeployTurns();
         var swapTurn = new SwapTurn(previousTurn);
-        var oldBanion = previousTurn.OtherEntityCurrentlyDeployedBanion();
+        IBanion oldBanion = previousTurn.OtherEntityCurrentlyDeployedBanion()!;
         swapTurn.PerformAction();
         var banions = swapTurn.Action;
         AssertBanionEquality(oldBanion, banions.Item1);
         if (banions.Item2 is not null)
         {
-            AssertBanionEquality(swapTurn.OnTurnCurrentlyDeployedBanion(), banions.Item2);
+            AssertBanionEquality(swapTurn.OnTurnCurrentlyDeployedBanion()!, banions.Item2);
         }
     }
 

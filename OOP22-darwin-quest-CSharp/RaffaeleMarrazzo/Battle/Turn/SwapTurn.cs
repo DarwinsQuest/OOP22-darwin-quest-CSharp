@@ -29,7 +29,7 @@ public class SwapTurn : AbstractTurn, ISwapTurn
         }
         else
         {
-            _oldBanion = previousTurn.OtherEntityCurrentlyDeployedBanion().Copy();
+            _oldBanion = previousTurn.OtherEntityCurrentlyDeployedBanion()!.Copy();
             _newBanion = null;
         }
     }
