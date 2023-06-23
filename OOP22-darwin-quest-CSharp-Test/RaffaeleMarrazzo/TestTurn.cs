@@ -128,7 +128,6 @@ public class TestTurn
         var previousTurn = DoDeployTurns();
         var turn = new MoveTurn(previousTurn);
         var passiveBanionBeforeAction = previousTurn.OnTurnCurrentlyDeployedBanion()?.Copy();
-        var activeBanion = previousTurn.OtherEntityCurrentlyDeployedBanion();
         turn.PerformAction();
         var actionDone = turn.Action;
         var chosenMove = (IDamageMove)actionDone.Item1;
