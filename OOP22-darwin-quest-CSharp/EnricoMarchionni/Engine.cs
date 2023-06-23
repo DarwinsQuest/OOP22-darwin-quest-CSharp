@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Reflection;
+using OOP22_darwin_quest_CSharp.Cipollone.Entity;
 using OOP22_darwin_quest_CSharp.EnricoMarchionni.Difficulty;
 using OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
 using OOP22_darwin_quest_CSharp.EnricoMarchionni.World;
@@ -10,7 +11,13 @@ namespace OOP22_darwin_quest_CSharp.EnricoMarchionni;
 public class Engine : IEngine
 {
     private readonly IReadOnlySet<Type> _difficulties = ImmutableSortedSet.Create(typeof(NormalDifficulty));
+    private readonly IPlayer _player;
     private IDifficulty? _difficulty;
+
+    public Engine(IPlayer player)
+    {
+        _player = player;
+    }
 
     private string GetDifficultyName(Type type)
     {
@@ -50,8 +57,5 @@ public class Engine : IEngine
         return _difficulty is not null;
     }
 
-    public bool IsGameOver()
-    {
-        throw new NotImplementedException();
-    }
+    public bool IsGameOver => _player.IsOutOfBanions();
 }
