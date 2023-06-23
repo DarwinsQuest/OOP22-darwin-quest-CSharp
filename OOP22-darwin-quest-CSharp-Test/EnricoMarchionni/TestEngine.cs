@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OOP22_darwin_quest_CSharp.EnricoMarchionni;
-using OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
 
 namespace OOP22_darwin_quest_CSharp_Test.EnricoMarchionni;
 
