@@ -1,9 +1,9 @@
-﻿using OOP22_darwin_quest_CSharp.EnricoMarchionni.World;
+using OOP22_darwin_quest_CSharp.EnricoMarchionni.World;
 
 namespace OOP22_darwin_quest_CSharp_Test.EnricoMarchionni;
 
 [TestFixture]
-public class TestBoard
+internal class TestBoard
 {
 
     [Test]

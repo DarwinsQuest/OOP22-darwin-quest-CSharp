@@ -1,4 +1,4 @@
-﻿namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
+namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
 
 public class ImmutableElement : IElement
 {
@@ -27,5 +27,15 @@ public class ImmutableElement : IElement
     public bool IsWeaker(IElement other)
     {
         return _stronger.Contains(other.Name);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is ImmutableElement element && Name == element.Name;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Name, _weaker, _stronger);
     }
 }

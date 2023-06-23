@@ -1,4 +1,4 @@
-﻿using OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
+using OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
 
 namespace OOP22_darwin_quest_CSharp_Test.EnricoMarchionni;
 
@@ -16,6 +16,7 @@ internal class TestElement
         {
             Assert.That(air.IsWeaker(air), Is.True);
             Assert.That(electro.IsStronger(electro), Is.True);
+            Assert.That(new Air(), Is.EqualTo(air));
             Assert.That(electro.Name, Is.EqualTo("Electro"));
         });
     }

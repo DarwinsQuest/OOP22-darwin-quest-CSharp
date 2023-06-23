@@ -5,7 +5,7 @@ using OOP22_darwin_quest_CSharp.RaffaeleMarrazzo.Move;
 namespace OOP22_darwin_quest_CSharp_Test.EnricoMarchionni;
 
 [TestFixture]
-public class TestBanion
+internal class TestBanion
 {
     private const uint BANION_HP = 100;
     private uint count;

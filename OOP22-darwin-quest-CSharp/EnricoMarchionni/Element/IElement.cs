@@ -1,6 +1,6 @@
-﻿namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
+namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
 
-public interface IElement : IGameObject
+public interface IElement : IGameObject, INameable
 {
 
     bool IsStronger(IElement other);

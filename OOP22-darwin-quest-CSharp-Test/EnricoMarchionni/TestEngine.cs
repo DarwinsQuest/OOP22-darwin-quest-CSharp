@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +11,7 @@ using OOP22_darwin_quest_CSharp.EnricoMarchionni.Element;
 namespace OOP22_darwin_quest_CSharp_Test.EnricoMarchionni;
 
 [TestFixture]
-public class TestEngine
+internal class TestEngine
 {
 
     [Test]
