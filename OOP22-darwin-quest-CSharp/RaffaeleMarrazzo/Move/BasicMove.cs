@@ -32,7 +32,7 @@ public class BasicMove : IDamageMove
         Element = element;
     }
 
-    public uint ComputeDamage(IBanion playerBanion, IBanion opponentBanion)
+    public uint ComputeDamage(IBanion opponentBanion)
     {
         uint computedDamage;
         if (Element.IsWeaker(opponentBanion.Element))
@@ -54,8 +54,8 @@ public class BasicMove : IDamageMove
         return computedDamage;
     }
 
-    public void Perform(IBanion playerBanion, IBanion opponentBanion) =>
-        opponentBanion.DecreaseHp(ComputeDamage(playerBanion, opponentBanion));
+    public void Perform(IBanion opponentBanion) =>
+        opponentBanion.DecreaseHp(ComputeDamage(opponentBanion));
 
     public override bool Equals(object? obj)
     {

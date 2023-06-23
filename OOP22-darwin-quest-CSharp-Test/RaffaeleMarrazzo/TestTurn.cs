@@ -135,7 +135,7 @@ public class TestTurn
         var chosenMove = (IDamageMove)actionDone.Item1;
         AssertBanionEquality(turn.OnTurnCurrentlyDeployedBanion!, actionDone.Item2);
         AssertBanionEquality(turn.OtherEntityCurrentlyDeployedBanion!, actionDone.Item3);
-        Assert.That(chosenMove.ComputeDamage(actionDone.Item2, actionDone.Item3), Is.EqualTo(passiveBanionBeforeAction?.Hp - actionDone.Item3.Hp));
+        Assert.That(chosenMove.ComputeDamage(actionDone.Item3), Is.EqualTo(passiveBanionBeforeAction?.Hp - actionDone.Item3.Hp));
     }
 
     [Test]
@@ -162,7 +162,7 @@ public class TestTurn
         return turn2;
     }
 
-    private void AssertBanionEquality(IBanion b1, IBanion b2)
+    private static void AssertBanionEquality(IBanion b1, IBanion b2)
     {
         Assert.That(b1.Element, Is.EqualTo(b2.Element));
         Assert.That(b1.Name, Is.EqualTo(b2.Name));
