@@ -23,8 +23,6 @@ public class BattleTile : IBattleTile
         }
     }
 
-    public uint MinXpBound { get; } = 5;
-
     public BattleTile(IGameEntity player, IGameEntity opponent)
     {
         if (player is not null && opponent is not null)
@@ -45,7 +43,6 @@ public class BattleTile : IBattleTile
         }
         else
         {
-            // return _hasBeenDone && _winner is not null ? this._winner.Equals(entity) : false;
             return _hasBeenDone && _winner is not null && this._winner.Equals(entity);
         }
     }
@@ -57,7 +54,6 @@ public class BattleTile : IBattleTile
         {
             return false;
         }
-        // set hp to max for all the player banions? now it is impossible because GetInventory() retrieves an ImmutableList
         var firstTurn = new DeployTurn(Player, Opponent);
         firstTurn.PerformAction();
         _battleTurns.Add(firstTurn);
@@ -74,13 +70,12 @@ public class BattleTile : IBattleTile
         {
             _hasBeenDone = true;
             SetWinner();
-            // assign xp? it is impossible now for the same reason for which i cannot set hp to max at the beginning of the battle
             return false;
         }
         return true;
     }
 
-    public override int GetHashCode() => HashCode.Combine(_players);
+    public override int GetHashCode() => _players.GetHashCode();
 
     public override bool Equals(object? obj)
     {

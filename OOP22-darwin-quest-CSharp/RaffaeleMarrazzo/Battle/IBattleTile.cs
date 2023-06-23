@@ -11,8 +11,6 @@ public interface IBattleTile
 
     IImmutableList<ITurn> BattleTurns { get; }
 
-    uint MinXpBound { get; }
-
     bool NewBattle();
 
     bool NextTurn();
