@@ -43,7 +43,7 @@ public abstract class AbstractGameEntity : IGameEntity
         var allowedBanions = banions.Where(b => !_inventory.Contains(b)).ToList();
         var previousSize = _inventory.Count;
         _inventory.AddRange(allowedBanions);
-        return previousSize == _inventory.Count - allowedBanions.Count;
+        return allowedBanions.Count != 0 && previousSize == _inventory.Count - allowedBanions.Count;
     }
 
     public IBanion? UpdateInventory(IBanion oldBanion, IBanion newBanion)
