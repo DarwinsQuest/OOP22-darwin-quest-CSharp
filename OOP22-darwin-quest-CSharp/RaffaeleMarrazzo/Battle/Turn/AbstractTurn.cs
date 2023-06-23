@@ -10,9 +10,9 @@ public abstract class AbstractTurn : ITurn
     private readonly Tuple<IGameEntity, IBanion?> _otherEntity;
     public bool HasBeenDone { get; private set; }
 
-    public IGameEntity EntityOnTurn { get =>  _entityOnTurn.Item1; }
+    public IGameEntity EntityOnTurn => _entityOnTurn.Item1;
 
-    public IGameEntity OtherEntity { get => _otherEntity.Item1; }
+    public IGameEntity OtherEntity => _otherEntity.Item1;
 
     public IBanion? OnTurnCurrentlyDeployedBanion
     {
