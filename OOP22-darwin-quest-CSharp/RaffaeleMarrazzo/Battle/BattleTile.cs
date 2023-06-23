@@ -97,7 +97,7 @@ public class BattleTile : IBattleTile
     {
         ITurn currentTurn;
         ITurn previousTurn = _battleTurns[_battleTurns.Count - 1];
-        if (previousTurn.OtherEntityCurrentlyDeployedBanion()!.IsAlive)
+        if (previousTurn.OtherEntityCurrentlyDeployedBanion!.IsAlive)
         {
             currentTurn = GetEntityOnTurn(previousTurn).GetDecision().GetAssociatedTurn(previousTurn);
         }
@@ -127,6 +127,6 @@ public class BattleTile : IBattleTile
         }
     }
 
-    private static IGameEntity GetEntityOnTurn(ITurn previousTurn) => previousTurn.GetOtherEntity();
+    private static IGameEntity GetEntityOnTurn(ITurn previousTurn) => previousTurn.OtherEntity;
 
 }

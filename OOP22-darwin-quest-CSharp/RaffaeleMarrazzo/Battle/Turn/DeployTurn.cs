@@ -35,7 +35,7 @@ public class DeployTurn : AbstractTurn, IDeployTurn
     {
         if (HasBeenDone)
         {
-            return "DeployTurn[ " + GetEntityOnTurn().Name + " deployed the Banion " + Action;
+            return "DeployTurn[ " + EntityOnTurn.Name + " deployed the Banion " + Action;
         }
         else
         {
@@ -45,7 +45,7 @@ public class DeployTurn : AbstractTurn, IDeployTurn
 
     protected override void DoAction()
     {
-        IBanion currentBanion = GetEntityOnTurn().DeployBanion();
+        IBanion currentBanion = EntityOnTurn.DeployBanion();
         SetCurrentlyDeployedBanion(currentBanion);
         _deployedBanion = currentBanion.Copy();
     }

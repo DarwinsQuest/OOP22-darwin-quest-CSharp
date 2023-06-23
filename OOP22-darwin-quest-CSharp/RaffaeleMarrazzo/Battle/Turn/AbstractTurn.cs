@@ -10,6 +10,40 @@ public abstract class AbstractTurn : ITurn
     private readonly Tuple<IGameEntity, IBanion?> _otherEntity;
     public bool HasBeenDone { get; private set; }
 
+    public IGameEntity EntityOnTurn { get =>  _entityOnTurn.Item1; }
+
+    public IGameEntity OtherEntity { get => _otherEntity.Item1; }
+
+    public IBanion? OnTurnCurrentlyDeployedBanion
+    {
+        get
+        {
+            if (HasBeenDone)
+            {
+                return _entityOnTurn.Item2;
+            }
+            else
+            {
+                throw new InvalidOperationException("The turn must be done in order to call this method.");
+            }
+        }
+    }
+
+    public IBanion? OtherEntityCurrentlyDeployedBanion
+    {
+        get
+        {
+            if (HasBeenDone)
+            {
+                return _otherEntity.Item2;
+            }
+            else
+            {
+                throw new InvalidOperationException("The turn must be done in order to call this method.");
+            }
+        }
+    }
+
     public AbstractTurn(IGameEntity entityOnTurn, IGameEntity otherEntity)
     {
         _id = Guid.NewGuid();
@@ -42,38 +76,10 @@ public abstract class AbstractTurn : ITurn
             throw new ArgumentException("previousTurn cannot be unperformed");
         }
         _id = Guid.NewGuid();
-        _entityOnTurn = new Tuple<IGameEntity, IBanion?>(previousTurn.GetOtherEntity(), 
-            previousTurn.OtherEntityCurrentlyDeployedBanion());
-        _otherEntity = new Tuple<IGameEntity, IBanion?>(previousTurn.GetEntityOnTurn(), 
-            previousTurn.OnTurnCurrentlyDeployedBanion());
-    }
-
-    public IGameEntity GetEntityOnTurn() => _entityOnTurn.Item1;
-
-    public IGameEntity GetOtherEntity() => _otherEntity.Item1;
-
-    public IBanion? OnTurnCurrentlyDeployedBanion() // can be a property?
-    {
-        if (HasBeenDone)
-        {
-            return _entityOnTurn.Item2;
-        } 
-        else
-        {
-            throw new InvalidOperationException("The turn must be done in order to call this method.");
-        }
-    }
-
-    public IBanion? OtherEntityCurrentlyDeployedBanion() // can be a property?
-    {
-        if (HasBeenDone)
-        {
-            return _otherEntity.Item2;
-        }
-        else
-        {
-            throw new InvalidOperationException("The turn must be done in order to call this method.");
-        }
+        _entityOnTurn = new Tuple<IGameEntity, IBanion?>(previousTurn.OtherEntity, 
+            previousTurn.OtherEntityCurrentlyDeployedBanion);
+        _otherEntity = new Tuple<IGameEntity, IBanion?>(previousTurn.EntityOnTurn, 
+            previousTurn.OnTurnCurrentlyDeployedBanion);
     }
 
     public void PerformAction()

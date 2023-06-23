@@ -28,15 +28,15 @@ public class MoveTurn : AbstractTurn, IMoveTurn
 
     public MoveTurn(ITurn previousTurn) : base (previousTurn)
     {
-        if (previousTurn.OnTurnCurrentlyDeployedBanion() is null || previousTurn.OtherEntityCurrentlyDeployedBanion() is null)
+        if (previousTurn.OnTurnCurrentlyDeployedBanion is null || previousTurn.OtherEntityCurrentlyDeployedBanion is null)
         {
             throw new ArgumentException("All the entities must have a currently deployed banion.");
         }
         else
         {
             _actionDone = null;
-            _activeBanion = previousTurn.OtherEntityCurrentlyDeployedBanion()!;
-            _passiveBanion = previousTurn.OnTurnCurrentlyDeployedBanion()!;
+            _activeBanion = previousTurn.OtherEntityCurrentlyDeployedBanion!;
+            _passiveBanion = previousTurn.OnTurnCurrentlyDeployedBanion!;
             _activeBanionCopy = _activeBanion.Copy();
             _passiveBanionCopy = null;
         }
@@ -46,7 +46,7 @@ public class MoveTurn : AbstractTurn, IMoveTurn
     {
         if (HasBeenDone)
         {
-            return "MoveTurnImpl[ " + GetEntityOnTurn().Name + " performed the move " + Action.Item1
+            return "MoveTurnImpl[ " + EntityOnTurn.Name + " performed the move " + Action.Item1
                     + " with the banion " + Action.Item2 + " against the banion " + Action.Item3;
         }
         else
@@ -57,7 +57,7 @@ public class MoveTurn : AbstractTurn, IMoveTurn
 
     protected override void DoAction()
     {
-        _actionDone = GetEntityOnTurn().SelectMove(_activeBanion);
+        _actionDone = EntityOnTurn.SelectMove(_activeBanion);
         _actionDone.Perform(_activeBanion, _passiveBanion);
         _passiveBanionCopy = _passiveBanion.Copy();
     }

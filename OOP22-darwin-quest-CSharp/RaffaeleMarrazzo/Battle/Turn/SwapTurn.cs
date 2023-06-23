@@ -23,13 +23,13 @@ public class SwapTurn : AbstractTurn, ISwapTurn
 
     public SwapTurn(ITurn previousTurn) : base(previousTurn)
     {
-        if (previousTurn.OtherEntityCurrentlyDeployedBanion() is null)
+        if (previousTurn.OtherEntityCurrentlyDeployedBanion is null)
         {
             throw new ArgumentException("The entity not on turn in previousTurn must have a currently deployed banion.");
         }
         else
         {
-            _oldBanion = previousTurn.OtherEntityCurrentlyDeployedBanion()!.Copy();
+            _oldBanion = previousTurn.OtherEntityCurrentlyDeployedBanion!.Copy();
             _newBanion = null;
         }
     }
@@ -38,7 +38,7 @@ public class SwapTurn : AbstractTurn, ISwapTurn
     {
         if (HasBeenDone)
         {
-            return "SwapTurnImpl[ " + GetEntityOnTurn().Name + " swapped the banion " + Action.Item1
+            return "SwapTurnImpl[ " + EntityOnTurn.Name + " swapped the banion " + Action.Item1
                     + " with the banion " + Action.Item2;
         }
         else
@@ -49,7 +49,7 @@ public class SwapTurn : AbstractTurn, ISwapTurn
 
     protected override void DoAction()
     {
-        var chosenBanion = GetEntityOnTurn().SwapBanion();
+        var chosenBanion = EntityOnTurn.SwapBanion();
         SetCurrentlyDeployedBanion(chosenBanion);
         _newBanion = chosenBanion?.Copy();
     }

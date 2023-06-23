@@ -59,9 +59,9 @@ public class TestTurn
         turn.PerformAction();
         var deployTurn = new DeployTurn(turn);
         deployTurn.PerformAction();
-        Assert.That(deployTurn.GetEntityOnTurn(), Is.EqualTo(turn.GetOtherEntity()));
-        Assert.That(deployTurn.GetOtherEntity(), Is.EqualTo(turn.GetEntityOnTurn()));
-        Assert.That(deployTurn.OtherEntityCurrentlyDeployedBanion(), Is.EqualTo(turn.OnTurnCurrentlyDeployedBanion()));
+        Assert.That(deployTurn.EntityOnTurn, Is.EqualTo(turn.OtherEntity));
+        Assert.That(deployTurn.OtherEntity, Is.EqualTo(turn.EntityOnTurn));
+        Assert.That(deployTurn.OtherEntityCurrentlyDeployedBanion, Is.EqualTo(turn.OnTurnCurrentlyDeployedBanion));
     }
 
     [Test]
@@ -74,10 +74,10 @@ public class TestTurn
         var deployTurn = DoDeployTurns();
         var moveTurn = new MoveTurn(deployTurn);
         moveTurn.PerformAction();
-        Assert.That(moveTurn.GetEntityOnTurn(), Is.EqualTo(deployTurn.GetOtherEntity()));
-        Assert.That(moveTurn.GetOtherEntity(), Is.EqualTo(deployTurn.GetEntityOnTurn()));
-        Assert.That(moveTurn.OnTurnCurrentlyDeployedBanion(), Is.EqualTo((deployTurn.OtherEntityCurrentlyDeployedBanion())));
-        Assert.That(moveTurn.OtherEntityCurrentlyDeployedBanion(), Is.EqualTo(deployTurn.OnTurnCurrentlyDeployedBanion()));
+        Assert.That(moveTurn.EntityOnTurn, Is.EqualTo(deployTurn.OtherEntity));
+        Assert.That(moveTurn.OtherEntity, Is.EqualTo(deployTurn.EntityOnTurn));
+        Assert.That(moveTurn.OnTurnCurrentlyDeployedBanion, Is.EqualTo((deployTurn.OtherEntityCurrentlyDeployedBanion)));
+        Assert.That(moveTurn.OtherEntityCurrentlyDeployedBanion, Is.EqualTo(deployTurn.OnTurnCurrentlyDeployedBanion));
     }
 
     [Test]
@@ -90,9 +90,9 @@ public class TestTurn
         var deployTurn = DoDeployTurns();
         var swapTurn = new SwapTurn(deployTurn);
         swapTurn.PerformAction();
-        Assert.That(swapTurn.GetEntityOnTurn(), Is.EqualTo(deployTurn.GetOtherEntity()));
-        Assert.That(swapTurn.GetOtherEntity(), Is.EqualTo(deployTurn.GetEntityOnTurn()));
-        Assert.That(swapTurn.OtherEntityCurrentlyDeployedBanion(), Is.EqualTo(deployTurn.OnTurnCurrentlyDeployedBanion()));
+        Assert.That(swapTurn.EntityOnTurn, Is.EqualTo(deployTurn.OtherEntity));
+        Assert.That(swapTurn.OtherEntity, Is.EqualTo(deployTurn.EntityOnTurn));
+        Assert.That(swapTurn.OtherEntityCurrentlyDeployedBanion, Is.EqualTo(deployTurn.OnTurnCurrentlyDeployedBanion));
     }
 
     [Test]
@@ -106,11 +106,13 @@ public class TestTurn
     public void TestBanionGetters()
     {
         ITurn turn = new DeployTurn(E1, E2);
-        Assert.Throws<InvalidOperationException>(() => turn.OnTurnCurrentlyDeployedBanion());
-        Assert.Throws<InvalidOperationException>(() => turn.OtherEntityCurrentlyDeployedBanion());
+        IBanion? onTurnBanion;
+        IBanion? otherEntityBanion;
+        Assert.Throws<InvalidOperationException>(() => onTurnBanion = turn.OnTurnCurrentlyDeployedBanion);
+        Assert.Throws<InvalidOperationException>(() => otherEntityBanion = turn.OtherEntityCurrentlyDeployedBanion);
         turn.PerformAction();
-        Assert.DoesNotThrow(() => turn.OnTurnCurrentlyDeployedBanion());
-        Assert.DoesNotThrow(() => turn.OtherEntityCurrentlyDeployedBanion());
+        Assert.DoesNotThrow(() => onTurnBanion = turn.OnTurnCurrentlyDeployedBanion);
+        Assert.DoesNotThrow(() => otherEntityBanion = turn.OtherEntityCurrentlyDeployedBanion);
     }
 
     [Test]
@@ -119,7 +121,7 @@ public class TestTurn
         var turn = new DeployTurn(E1, E2);
         turn.PerformAction();
         IBanion deployedBanion = turn.Action;
-        AssertBanionEquality(turn.OnTurnCurrentlyDeployedBanion()!, deployedBanion);
+        AssertBanionEquality(turn.OnTurnCurrentlyDeployedBanion!, deployedBanion);
     }
 
     [Test]
@@ -127,12 +129,12 @@ public class TestTurn
     {
         var previousTurn = DoDeployTurns();
         var turn = new MoveTurn(previousTurn);
-        var passiveBanionBeforeAction = previousTurn.OnTurnCurrentlyDeployedBanion()?.Copy();
+        var passiveBanionBeforeAction = previousTurn.OnTurnCurrentlyDeployedBanion?.Copy();
         turn.PerformAction();
         var actionDone = turn.Action;
         var chosenMove = (IDamageMove)actionDone.Item1;
-        AssertBanionEquality(turn.OnTurnCurrentlyDeployedBanion()!, actionDone.Item2);
-        AssertBanionEquality(turn.OtherEntityCurrentlyDeployedBanion()!, actionDone.Item3);
+        AssertBanionEquality(turn.OnTurnCurrentlyDeployedBanion!, actionDone.Item2);
+        AssertBanionEquality(turn.OtherEntityCurrentlyDeployedBanion!, actionDone.Item3);
         Assert.That(chosenMove.ComputeDamage(actionDone.Item2, actionDone.Item3), Is.EqualTo(passiveBanionBeforeAction?.Hp - actionDone.Item3.Hp));
     }
 
@@ -141,13 +143,13 @@ public class TestTurn
     {
         var previousTurn = DoDeployTurns();
         var swapTurn = new SwapTurn(previousTurn);
-        IBanion oldBanion = previousTurn.OtherEntityCurrentlyDeployedBanion()!;
+        IBanion oldBanion = previousTurn.OtherEntityCurrentlyDeployedBanion!;
         swapTurn.PerformAction();
         var banions = swapTurn.Action;
         AssertBanionEquality(oldBanion, banions.Item1);
         if (banions.Item2 is not null)
         {
-            AssertBanionEquality(swapTurn.OnTurnCurrentlyDeployedBanion()!, banions.Item2);
+            AssertBanionEquality(swapTurn.OnTurnCurrentlyDeployedBanion!, banions.Item2);
         }
     }
 

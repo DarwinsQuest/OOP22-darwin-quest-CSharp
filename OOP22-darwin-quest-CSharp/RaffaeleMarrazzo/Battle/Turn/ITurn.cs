@@ -7,13 +7,13 @@ public interface ITurn
 {
     bool HasBeenDone { get; }
 
-    IGameEntity GetEntityOnTurn();
+    IGameEntity EntityOnTurn { get; }
 
-    IGameEntity GetOtherEntity();
+    IGameEntity OtherEntity { get; }
 
-    IBanion? OnTurnCurrentlyDeployedBanion();
-
-    IBanion? OtherEntityCurrentlyDeployedBanion();
+    IBanion? OnTurnCurrentlyDeployedBanion { get; }
+    
+    IBanion? OtherEntityCurrentlyDeployedBanion { get; }
 
     void PerformAction();
 

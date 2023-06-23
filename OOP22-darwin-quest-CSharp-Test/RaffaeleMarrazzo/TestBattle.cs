@@ -96,15 +96,15 @@ public class TestBattle
             var currentIteratingTurn = report[i];
             if (i % 2 == 0)
             {
-                Assert.That(currentIteratingTurn.GetEntityOnTurn(), Is.EqualTo(E1));
-                Assert.That(currentIteratingTurn.GetOtherEntity(), Is.EqualTo(E2));
+                Assert.That(currentIteratingTurn.EntityOnTurn, Is.EqualTo(E1));
+                Assert.That(currentIteratingTurn.OtherEntity, Is.EqualTo(E2));
             }
             else
             {
-                Assert.That(currentIteratingTurn.GetEntityOnTurn(), Is.EqualTo(E2));
-                Assert.That(currentIteratingTurn.GetOtherEntity(), Is.EqualTo(E1));
+                Assert.That(currentIteratingTurn.EntityOnTurn, Is.EqualTo(E2));
+                Assert.That(currentIteratingTurn.OtherEntity, Is.EqualTo(E1));
             }
-            var otherEntityBanion = currentIteratingTurn.OtherEntityCurrentlyDeployedBanion();
+            var otherEntityBanion = currentIteratingTurn.OtherEntityCurrentlyDeployedBanion;
             if (otherEntityBanion is not null
                 && currentIteratingTurn is MoveTurn turn
                 && !turn.Action.Item3.IsAlive
@@ -133,7 +133,7 @@ public class TestBattle
             nextTurn = battle.NextTurn();
         }
         var lastTurn = battle.BattleTurns[battle.BattleTurns.Count - 1];
-        var loser = lastTurn.GetOtherEntity();
+        var loser = lastTurn.OtherEntity;
         Assert.That(battle.IsWinner(loser), Is.False);
         Assert.That(battle.IsWinner(new Opponent("E3", new BasicAI())), Is.False);
     }

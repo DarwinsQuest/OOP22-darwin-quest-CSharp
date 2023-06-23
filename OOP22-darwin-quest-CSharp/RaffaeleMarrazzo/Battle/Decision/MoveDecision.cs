@@ -8,6 +8,7 @@ public class MoveDecision : MiscDecision
     public MoveDecision() : base("Move")
     {
     }
+
     public override ITurn GetAssociatedTurn(ITurn previousTurn) => new MoveTurn(previousTurn);
 
 }
