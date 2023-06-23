@@ -71,10 +71,18 @@ public class Banion : IBanion
 
     public void IncreaseHp(uint amount)
     {
-        var newHp = Hp + amount;
-        if (newHp <= Hp)
+        if (amount == 0)
         {
-            throw new ArgumentException("Amount to increase Hp cannot be negative or zero", nameof(amount));
+            throw new ArgumentException("Amount to increase Hp cannot be zero", nameof(amount));
+        }
+        uint newHp;
+        try
+        {
+            newHp = checked(Hp + amount);
+        }
+        catch (OverflowException)
+        {
+            newHp = MaxHp;
         }
         Hp = Math.Min(newHp, MaxHp);
         EventBanionChanged?.Invoke(this, this);
@@ -82,11 +90,11 @@ public class Banion : IBanion
 
     public void DecreaseHp(uint amount)
     {
-        var newHp = Hp - amount;
-        if (newHp >= Hp)
+        if (amount == 0)
         {
-            throw new ArgumentException("Amount to decrease Hp cannot be negative or zero", nameof(amount));
+            throw new ArgumentException("Amount to decrease Hp cannot be zero", nameof(amount));
         }
+        var newHp = amount >= Hp ? IBanion.MIN_HP : Hp - amount;
         Hp = Math.Max(newHp, IBanion.MIN_HP);
         EventBanionChanged?.Invoke(this, this);
     }
@@ -119,18 +127,10 @@ public class Banion : IBanion
 
     public static bool operator !=(Banion? left, Banion? right) => !(left == right);
 
-    public bool Equals(IBanion? other)
-    {
-        return other is Banion banion && id.Equals(banion.id);
-    }
-
     public override bool Equals(object? obj)
     {
         return obj is Banion banion && id.Equals(banion.id);
     }
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(id, Name, Element, IsAlive, Hp, MaxHp, Level);
-    }
+    public override int GetHashCode() => id.GetHashCode();
 }

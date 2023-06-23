@@ -4,7 +4,7 @@ using OOP22_darwin_quest_CSharp.RaffaeleMarrazzo.Move;
 
 namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Banion;
 
-public interface IBanion : IEquatable<IBanion>, ICloneable<IBanion>, IGameObject, IElemental
+public interface IBanion : ICloneable<IBanion>, IGameObject, IElemental
 {
     public const uint NUM_MOVES = 4;
     public const uint MIN_HP = 0;

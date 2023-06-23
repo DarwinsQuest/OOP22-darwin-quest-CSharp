@@ -37,6 +37,30 @@ internal class TestBanion
 
         banion.DecreaseHp(banion.Hp);
         Assert.That(banion.IsAlive, Is.False);
+
+        // OVERFLOW tests
+
+        banion.IncreaseHp(BANION_HP);
+        Assert.That(banion.IsAlive, Is.True);
+
+        banion.IncreaseHp(uint.MaxValue);
+        Assert.That(banion.Hp, Is.EqualTo(banion.MaxHp));
+
+        banion.DecreaseHp(banion.Hp);
+        Assert.That(banion.IsAlive, Is.False);
+
+        banion.IncreaseHp(BANION_HP);
+        Assert.That(banion.IsAlive, Is.True);
+
+        banion.DecreaseHp(uint.MaxValue);
+        Assert.Multiple(() =>
+        {
+            Assert.That(banion.IsAlive, Is.False);
+            Assert.That(banion.Hp, Is.EqualTo(IBanion.MIN_HP));
+        });
+
+        Assert.Throws(typeof(ArgumentException), () => banion.IncreaseHp(0));
+        Assert.Throws(typeof(ArgumentException), () => banion.DecreaseHp(0));
     }
 
     [Test]
