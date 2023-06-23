@@ -35,7 +35,7 @@ public class DeployTurn : AbstractTurn, IDeployTurn
     {
         if (HasBeenDone)
         {
-            return "DeployTurn[ " + EntityOnTurn.Name + " deployed the Banion " + Action;
+            return "DeployTurn[ " + EntityOnTurn.Name + " deployed the Banion " + Action + "]";
         }
         else
         {

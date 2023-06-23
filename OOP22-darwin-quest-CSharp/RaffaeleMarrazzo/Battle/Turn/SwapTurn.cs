@@ -39,7 +39,7 @@ public class SwapTurn : AbstractTurn, ISwapTurn
         if (HasBeenDone)
         {
             return "SwapTurnImpl[ " + EntityOnTurn.Name + " swapped the banion " + Action.Item1
-                    + " with the banion " + Action.Item2;
+                    + " with the banion " + Action.Item2 + "]";
         }
         else
         {

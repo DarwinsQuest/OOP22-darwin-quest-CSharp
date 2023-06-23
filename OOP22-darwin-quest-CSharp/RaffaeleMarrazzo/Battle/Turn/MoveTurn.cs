@@ -47,7 +47,7 @@ public class MoveTurn : AbstractTurn, IMoveTurn
         if (HasBeenDone)
         {
             return "MoveTurnImpl[ " + EntityOnTurn.Name + " performed the move " + Action.Item1
-                    + " with the banion " + Action.Item2 + " against the banion " + Action.Item3;
+                    + " with the banion " + Action.Item2 + " against the banion " + Action.Item3 + "]";
         }
         else
         {
