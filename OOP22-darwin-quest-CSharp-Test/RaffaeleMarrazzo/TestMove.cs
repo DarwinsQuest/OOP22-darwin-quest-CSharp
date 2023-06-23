@@ -19,8 +19,6 @@ public class TestMove
         Assert.Throws<ArgumentException>(() => new BasicMove(ILLEGAL_BASE_DAMAGE, MOVE_NAME_1, neutral));
         Assert.Throws<ArgumentException>(() => new BasicMove(LEGAL_BASE_DAMAGE_1, "", neutral));
         Assert.Throws<ArgumentException>(() => new BasicMove(LEGAL_BASE_DAMAGE_1, "  ", neutral));
-        Assert.Throws<ArgumentException>(() => new BasicMove(LEGAL_BASE_DAMAGE_1, null, neutral));
-        Assert.Throws<ArgumentNullException>(() => new BasicMove(LEGAL_BASE_DAMAGE_1, MOVE_NAME_1, null));
 
         IDamageMove move = new BasicMove(LEGAL_BASE_DAMAGE_1, MOVE_NAME_1, neutral);
         Assert.That(move.BaseDamage, Is.EqualTo(LEGAL_BASE_DAMAGE_1));

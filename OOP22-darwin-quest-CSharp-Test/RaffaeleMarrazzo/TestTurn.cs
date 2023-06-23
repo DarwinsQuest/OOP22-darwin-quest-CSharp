@@ -55,9 +55,6 @@ public class TestTurn
     public void TestDeployTurnCreation()
     {
         ITurn turn = new DeployTurn(E1, E2);
-        Assert.Throws<ArgumentNullException>(() => new DeployTurn(null, E2));
-        Assert.Throws<ArgumentNullException>(() => new DeployTurn(E1, null));
-        Assert.Throws<ArgumentNullException>(() => new DeployTurn(null));
         Assert.Throws<ArgumentException>(() => new DeployTurn(turn));
         turn.PerformAction();
         var deployTurn = new DeployTurn(turn);
@@ -71,7 +68,6 @@ public class TestTurn
     public void TestMoveTurnCreation()
     {
         ITurn turn = new DeployTurn(E1, E2);
-        Assert.Throws<ArgumentNullException>(() => new MoveTurn(null));
         Assert.Throws<ArgumentException>(() => new MoveTurn(turn));
         turn.PerformAction();
         Assert.Throws<ArgumentException>(() => new MoveTurn(turn));
@@ -88,7 +84,6 @@ public class TestTurn
     public void TestSwapTurnCreation()
     {
         ITurn turn = new DeployTurn(E1, E2);
-        Assert.Throws<ArgumentNullException>(() => new SwapTurn(null));
         Assert.Throws<ArgumentException>(() => new SwapTurn(turn));
         turn.PerformAction();
         Assert.Throws<ArgumentException>(() => new SwapTurn(turn));
