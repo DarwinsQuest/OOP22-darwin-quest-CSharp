@@ -15,13 +15,7 @@ public class BattleTile : IBattleTile
 
     public IGameEntity Opponent => _players[1];
 
-    public IImmutableList<ITurn> BattleTurns
-    {
-        get
-        {
-            return _hasBeenDone ? _battleTurns.ToImmutableList() : ImmutableList.Create<ITurn>();
-        }
-    }
+    public IImmutableList<ITurn> BattleTurns => _hasBeenDone ? _battleTurns.ToImmutableList() : ImmutableList.Create<ITurn>();
 
     public BattleTile(IGameEntity player, IGameEntity opponent)
     {

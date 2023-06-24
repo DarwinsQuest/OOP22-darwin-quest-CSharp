@@ -74,6 +74,6 @@ public class BasicMove : IDamageMove
     public override int GetHashCode() => HashCode.Combine(BaseDamage, Name, Element);
 
     public override string ToString() => 
-        "BasicMove[name = " + Name + ", element = " + Element.Name + ", base damage = " + BaseDamage;
+        "BasicMove[name = " + Name + ", element = " + Element.Name + ", base damage = " + BaseDamage + "]";
 
 }
