@@ -61,9 +61,11 @@ public class Banion : IBanion
 
     public IReadOnlySet<IMove> Moves => ImmutableHashSet.CreateRange(_moves);
 
-    public uint Level { get; private set; } = 1;
+    public uint Level { get; protected set; } = 1;
+    
+    public void IncreaseLevel() => Level += 1;
 
-    public uint Hp { get; private set; }
+    public uint Hp { get; protected set; }
 
     public uint MaxHp
     {
