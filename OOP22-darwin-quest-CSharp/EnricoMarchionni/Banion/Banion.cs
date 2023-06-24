@@ -6,10 +6,10 @@ namespace OOP22_darwin_quest_CSharp.EnricoMarchionni.Banion;
 
 public class Banion : IBanion
 {
-    private const uint NUM_MOVES = 4;
-
     private readonly Guid id;
     private readonly ISet<IMove> _moves;
+    private uint _maxHp;
+
     public event EventHandler<IBanion>? EventBanionChanged;
 
     private Banion(Banion banion)
@@ -19,16 +19,16 @@ public class Banion : IBanion
         _moves = new HashSet<IMove>(banion._moves);
         Name = banion.Name;
         Hp = banion.Hp;
-        MaxHp = banion.MaxHp;
+        _maxHp = banion.MaxHp;
     }
 
     public Banion(IElement element, string name, uint hp, ISet<IMove> moves)
     {
         id = Guid.NewGuid();
         Element = element ?? throw new ArgumentNullException(nameof(element));
-        if (moves.Count != NUM_MOVES)
+        if (moves.Count != IBanion.NUM_MOVES)
         {
-            throw new ArgumentException($"The {nameof(moves)} have to be exactly {NUM_MOVES}");
+            throw new ArgumentException($"The {nameof(moves)} have to be exactly {IBanion.NUM_MOVES}");
         }
         if (moves.Any(m => !IsMoveAcceptable(m)))
         {
@@ -45,7 +45,7 @@ public class Banion : IBanion
             throw new ArgumentException($"{nameof(hp)} must be greater that {IBanion.MIN_HP}");
         }
         Hp = hp;
-        MaxHp = Hp;
+        _maxHp = Hp;
     }
 
     private bool IsMoveAcceptable(IMove move)
@@ -65,7 +65,26 @@ public class Banion : IBanion
 
     public uint Hp { get; private set; }
 
-    public uint MaxHp { get; private set; }
+    public uint MaxHp
+    {
+        get => _maxHp;
+        set
+        {
+            if (value != MaxHp)
+            {
+                if (value <= IBanion.MIN_HP)
+                {
+                    throw new ArgumentException($"{nameof(Banion)} {nameof(MaxHp)} can't be set to {IBanion.MIN_HP} or lower value", nameof(MaxHp));
+                }
+                _maxHp = value;
+                if (Hp > MaxHp)
+                {
+                    Hp = MaxHp;
+                }
+                EventBanionChanged?.Invoke(this, this);
+            }
+        }
+    }
 
     public void IncreaseHp(uint amount)
     {

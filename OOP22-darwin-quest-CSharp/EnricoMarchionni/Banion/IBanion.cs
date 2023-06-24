@@ -19,7 +19,7 @@ public interface IBanion : ICloneable<IBanion>, IGameObject, IElemental
 
     uint Hp { get; }
 
-    uint MaxHp { get; }
+    uint MaxHp { get; set; }
 
     void IncreaseHp(uint amount);
 

@@ -84,15 +84,20 @@ internal class TestBanion
     {
         IBanion banion = new Banion(new Neutral(), "testBanionObserver", 100, _moves);
         uint hpDecrease = 10;
-        uint observableCalls = 3;
+        uint observableCalls = 4;
 
         Assert.That(banion.IsAlive, Is.True);
         banion.EventBanionChanged += Banion_BanionChanged1;
         banion.EventBanionChanged += Banion_BanionChanged2;
-        banion.DecreaseHp(hpDecrease);
+        banion.DecreaseHp(hpDecrease); // 2 calls
         banion.EventBanionChanged -= Banion_BanionChanged1;
-        banion.DecreaseHp(hpDecrease);
-        Assert.That(count, Is.EqualTo(observableCalls));
+        banion.DecreaseHp(hpDecrease); // 1 call
+        banion.MaxHp = 10; // 1 call
+        Assert.Multiple(() =>
+        {
+            Assert.That(banion.Hp, Is.EqualTo(banion.MaxHp));
+            Assert.That(count, Is.EqualTo(observableCalls));
+        });
     }
 
     [Test]
